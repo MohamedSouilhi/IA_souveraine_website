@@ -26,7 +26,7 @@ const Index = () => {
           Select one of the options below to continue to your personalized experience
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-6xl">
           {[
             {
               title: "Casque et Gilet Detection",
@@ -42,13 +42,7 @@ const Index = () => {
               icon: <FileText className="w-12 h-12 mb-4 text-white" />,
               route: "/text-detection"
             },
-            {
-              title: "Assistant Vocal Intelligent",
-              description: "Interface vocale intelligente pour une interaction naturelle",
-              bgColor: "bg-purple-600",
-              icon: <Mic className="w-12 h-12 mb-4 text-white" />,
-              route: "/source-selection"
-            }
+
           ].map((card, index) => (
             <motion.div
               key={index}

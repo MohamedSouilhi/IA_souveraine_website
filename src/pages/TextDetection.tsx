@@ -4,6 +4,7 @@ import TextDetectionLayout from '@/components/TextDetection/TextDetectionLayout'
 import FileUploadSection from '@/components/TextDetection/FileUploadSection';
 import ResultsSection from '@/components/TextDetection/ResultsSection';
 import ActionButtons from '@/components/TextDetection/ActionButtons';
+import { Card, CardContent } from '@/components/ui/card';
 
 const TextDetection: React.FC = () => {
   const [extractedText, setExtractedText] = useState<string>('');
@@ -52,12 +53,16 @@ const TextDetection: React.FC = () => {
         <h2 className="text-2xl font-bold mb-6">Charger un Fichier et Configurer l'OCR</h2>
         
         <FileUploadSection onFileProcessed={handleTextExtraction} />
-        
+             <Card>
+        <CardContent className="flex flex-col p-6">
         <ResultsSection 
           isProcessing={isProcessing} 
           extractedText={extractedText} 
           error={error} // Passer l'erreur à ResultsSection
         />
+        </CardContent>
+      </Card>
+
 
         <ActionButtons extractedText={extractedText} />
       </div>
