@@ -1,20 +1,15 @@
-
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { FileText, Search } from "lucide-react";
-import FileUploader from '@/components/FileUploader';
-
+import FileUploader from './FileUploader';
 interface FileUploadSectionProps {
-  onFileProcessed?: (text: string) => void;
+  onFileProcessed: (file: File) => void; // Passe le fichier au parent
 }
 
 const FileUploadSection: React.FC<FileUploadSectionProps> = ({ onFileProcessed }) => {
-  // Fonction pour simuler l'extraction de texte lorsqu'un fichier est téléchargé
-  const handleFileUpload = () => {
-    if (onFileProcessed) {
-      // Simuler l'extraction de texte avec un exemple de texte
-      const sampleText = "Ceci est un exemple de texte extrait d'un document.\n\nLe système OCR a pu détecter ce texte à partir de l'image téléchargée.\n\nVous pouvez maintenant copier ou télécharger ce texte pour une utilisation ultérieure.";
-      onFileProcessed(sampleText);
+  const handleFileUpload = (file: File) => {
+    if (file) {
+      onFileProcessed(file); // Passer le fichier au parent
     }
   };
 
