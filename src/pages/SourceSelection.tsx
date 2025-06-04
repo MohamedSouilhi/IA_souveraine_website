@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Camera, Network, Video, Image } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -10,11 +9,13 @@ import { toast } from "sonner";
 const SourceSelection = () => {
   const [selectedSource, setSelectedSource] = useState<string | null>(null);
   const [ipCameraUrl, setIpCameraUrl] = useState("");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [showIpInput, setShowIpInput] = useState(false);
   const navigate = useNavigate();
 
   const handleSelectSource = (source: string) => {
     setSelectedSource(source);
+    localStorage.setItem("selectedSource", source); // Save to localStorage
     if (source === "ip-camera") {
       setShowIpInput(true);
     } else {
@@ -30,6 +31,7 @@ const SourceSelection = () => {
       toast.error("Invalid URL. Please try again.");
       return;
     }
+    localStorage.setItem("ipCameraUrl", ipCameraUrl); // Save IP camera URL
     toast.success("IP Camera connected!");
   };
 
@@ -46,7 +48,10 @@ const SourceSelection = () => {
     input.onchange = (e) => {
       const file = (e.target as HTMLInputElement).files?.[0];
       if (file) {
+        setSelectedFile(file); // Store the file in state
         toast.success(`${type === "video" ? "Video" : "Image"} loaded: ${file.name}`);
+      } else {
+        setSelectedFile(null);
       }
     };
     
@@ -54,11 +59,23 @@ const SourceSelection = () => {
   };
 
   const handleNext = () => {
-    if (selectedSource) {
-      navigate("/object-detection");
-    } else {
+    if (!selectedSource) {
       toast.error("Please select a video source.");
+      return;
     }
+
+    if (selectedSource === "ip-camera" && !ipCameraUrl) {
+      toast.error("Please enter an IP Camera URL and connect.");
+      return;
+    }
+
+    if ((selectedSource === "video-file" || selectedSource === "image-file") && !selectedFile) {
+      toast.error("Please select a file.");
+      return;
+    }
+
+    // Pass the selected file to the next page via navigate state
+    navigate("/object-detection", { state: { selectedFile } });
   };
 
   return (

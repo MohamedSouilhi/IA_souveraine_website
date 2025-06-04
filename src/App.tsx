@@ -13,6 +13,7 @@ import Layout from "./components/Layout";
 import SourceSelection from "./pages/SourceSelection";
 import ObjectDetection from "./pages/ObjectDetection";
 import TextDetectionScan from './pages/TextDetectionScan';
+import HistoryDetail from "./pages/HistoryDetail";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App = () => (
           {/* Text detection system routes */}
           <Route path="/text-detection" element={<TextDetection />} />
           <Route path="/text-detection-history" element={<TextDetectionHistory />} />
+          <Route path="/history/:id" element={<HistoryDetail />} />
           <Route path="/text-detection-scan" element={<TextDetectionScan />} />
           
           {/* Object detection system routes */}
